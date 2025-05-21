@@ -1,0 +1,32 @@
+# Python bytecode
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.pyc
+
+# Virtual environments
+venv/
+env/
+.venv/
+ENV/
+
+# Django secret or generated files
+*.log            # log files
+*.db             # any other DBs
+
+# Environment variables file
+.env
+.env.*
+
+# Django static/media files generated at runtime
+/staticfiles/
+/media/
+
+
+# Django migration cache
+**/migrations/__pycache__/
+**/migrations/*.pyc
+
+
+
