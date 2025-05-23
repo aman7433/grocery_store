@@ -4,6 +4,8 @@ from django.contrib.auth.models import User
 class Category(models.Model):
     name=models.CharField(max_length=30)
     description=models.TextField(max_length=200,blank=True)
+    def __str__(self):
+        return self.name
 
 class Product(models.Model):
     name=models.CharField(max_length=30)
@@ -11,12 +13,16 @@ class Product(models.Model):
     description=models.TextField()
     price=models.DecimalField(max_digits=8,decimal_places=2)
     stock=models.IntegerField()
-
+    def __str__(self):
+        return self.name
+    
 class CartItem(models.Model):
     user=models.ForeignKey(User,on_delete=models.CASCADE)
     product=models.ForeignKey(Product,on_delete=models.CASCADE)
     quantity=models.PositiveIntegerField()
-
+    def __str__(self):
+        return str(self.user)
+    
 class Order(models.Model):
     status_choices=[
         ('pending','pending'),
@@ -29,3 +35,6 @@ class Order(models.Model):
     total_price=models.DecimalField(decimal_places=2, max_digits=10)
     created_at=models.DateField(auto_now_add=True)
     status=models.CharField(max_length=10,choices=status_choices,default='pending')
+
+    def __str__(self):
+        return str(self.user)
