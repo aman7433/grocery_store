@@ -1,18 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <h1 style="text-align: center;">Welcome to our Grocery Shop</h1>
-    {% for i in categories %}
-    <ul>
-        <li>{{i.name}}</li>
-        <li>{{i.description}}</li>
-    </ul>
-              
+{% extends 'shop/base.html' %}
+{% block content %}
+<h2>Categories</h2>
+<ul>
+    {% for category in categories %}
+        <li><a href="{% url 'product_list_by_category' category.id %}">{{ category.name }}</a></li>
     {% endfor %}
-
-</body>
+</ul>
+{% endblock %}
