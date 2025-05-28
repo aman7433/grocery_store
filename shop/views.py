@@ -4,6 +4,9 @@ from django.contrib.auth.decorators import login_required
 from decimal import Decimal
 from django.contrib import messages
 from django.db import transaction
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth import login
+
 # Create your views here.
 
 def category_list(request):
@@ -33,8 +36,8 @@ def add_to_cart(request,product_id):
         defaults={'quantity':1}
     )
     if not created:
-        CartItem.quantity+=1
-        CartItem.save()
+        cart_item.quantity+=1
+        cart_item.save()
     messages.success(request,"Product added to cart")
     return redirect(view_cart)
 
@@ -74,7 +77,7 @@ def place_order(request):
     if not cart_items.exists():
         messages.warning(request,'your cart is empty')
         return redirect(product_list)
-    total=sum(item.product.price * item.product.quantity for item in cart_items)
+    total=sum(item.product.price * item.quantity for item in cart_items)
     order = Order.objects.create(
         user=request.user,
         total_price=Decimal(total)
@@ -102,3 +105,15 @@ def order_list(request):
 def order_detail(request, order_id):
     order = get_object_or_404(Order, id=order_id, user=request.user)
     return render(request, 'shop/order_detail.html', {'order': order})
+
+
+def sign_up(request):
+    if request.method=="POST":
+        forms=UserCreationForm(request.POST)
+        if forms.is_valid():
+            user= forms.save()
+            login(request,user)
+            return redirect('category_list')
+    else:
+        forms=UserCreationForm()
+    return render(request, 'shop/sign_up.html',{'form':forms})
