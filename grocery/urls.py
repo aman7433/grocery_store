@@ -22,9 +22,8 @@ from django.contrib.auth import views as views_auth  # ← built-in login/logout
 # from shop.views import sign_up
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('accounts/login/',  views_auth.LoginView.as_view(
-            template_name='registration/login.html'),  name='login'),
-    path('accounts/logout/', views_auth.LogoutView.as_view(),               name='logout'),
+    path('accounts/login/',  views_auth.LoginView.as_view(template_name='shop/login.html'),  name='login'),
+    path('accounts/logout/', views_auth.LogoutView.as_view(),name='logout'),
     # path('accounts/signup/', views.signup, name='signup'),
 
 
