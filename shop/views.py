@@ -5,6 +5,7 @@ from decimal import Decimal
 from django.contrib import messages
 from django.db import transaction
 from django.contrib.auth.forms import UserCreationForm
+from .forms import signUpForm
 from django.contrib.auth import login
 
 # Create your views here.
@@ -109,11 +110,11 @@ def order_detail(request, order_id):
 
 def sign_up(request):
     if request.method=="POST":
-        forms=UserCreationForm(request.POST)
+        forms=signUpForm(request.POST)
         if forms.is_valid():
             user= forms.save()
             login(request,user)
             return redirect('category_list')
     else:
-        forms=UserCreationForm()
+        forms=signUpForm()
     return render(request, 'shop/sign_up.html',{'form':forms})
